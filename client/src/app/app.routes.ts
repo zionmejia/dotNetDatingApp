@@ -2,9 +2,12 @@ import { Routes } from '@angular/router';
 import { MemberList } from '../features/members/member-list/member-list';
 import { MemberDetailed } from '../features/members/member-detailed/member-detailed';
 import { Home } from '../features/home/home';
+import { TestErrors } from '../features/test-errors/test-errors';
 import { Messages } from '../features/messages/messages';
 import { Lists } from '../features/lists/lists';
 import { authGuard } from '../core/guards/auth-guard';
+import { NotFound } from '../shared/errors/not-found/not-found';
+import { ServerError } from '../shared/errors/server-error/server-error';
 
 export const routes: Routes = [
   {
@@ -32,11 +35,19 @@ export const routes: Routes = [
       {
         path: 'messages',
         component: Messages,
-      }
-    ]
+      },
+    ],
+  },
+  {
+    path: 'errors',
+    component: TestErrors,
+  },
+  {
+    path: 'server-error',
+    component: ServerError,
   },
   {
     path: '**',
-    component: Home,
+    component: NotFound,
   },
 ];
