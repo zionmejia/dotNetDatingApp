@@ -29,13 +29,13 @@ export class AccountService implements OnInit {
     return this.http.post<User>(this.baseUrl + 'account/login', creds).pipe(
       tap((user) => {
         if (user) {
-         this.setCurrentUser(user);
+          this.setCurrentUser(user);
         }
       }),
     );
   }
 
-  setCurrentUser(user:User) {
+  setCurrentUser(user: User) {
     this.currentUser.set(user);
     localStorage.setItem('user', JSON.stringify(user));
   }
@@ -44,5 +44,4 @@ export class AccountService implements OnInit {
     localStorage.removeItem('user');
     this.currentUser.set(null);
   }
-
 }
