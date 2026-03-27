@@ -15,7 +15,7 @@ export class AccountService implements OnInit {
     return this.http.get(this.baseUrl + 'members');
   }
 
-  register(creds: RegisterCreds) {
+  public register(creds: RegisterCreds) {
     return this.http.post<User>(this.baseUrl + 'account/register', creds).pipe(
       tap((user) => {
         if (user) {
@@ -25,7 +25,7 @@ export class AccountService implements OnInit {
     );
   }
 
-  login(creds: LoginCreds) {
+  public login(creds: LoginCreds) {
     return this.http.post<User>(this.baseUrl + 'account/login', creds).pipe(
       tap((user) => {
         if (user) {
@@ -35,12 +35,12 @@ export class AccountService implements OnInit {
     );
   }
 
-  setCurrentUser(user: User) {
+  public setCurrentUser(user: User) {
     this.currentUser.set(user);
     localStorage.setItem('user', JSON.stringify(user));
   }
 
-  logout() {
+  public logout() {
     localStorage.removeItem('user');
     this.currentUser.set(null);
   }

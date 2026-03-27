@@ -4,6 +4,7 @@ import { Router, RouterLink, RouterLinkActive, RouterModule } from '@angular/rou
 import { AccountService } from '../../core/services/account-service';
 import { ToastService } from '../../core/services/toast-service';
 import { themes } from '../theme';
+import { BusyService } from '../../core/services/busy-service';
 
 @Component({
   selector: 'app-nav',
@@ -15,6 +16,7 @@ export class Nav implements OnInit {
   public accountService = inject(AccountService);
   private router = inject(Router);
   private toast = inject(ToastService);
+  protected busyService = inject(BusyService);
   protected creds: any = {};
   protected selectedTheme = signal<string>(localStorage.getItem('theme') || 'light');
   protected themes = themes;
@@ -32,7 +34,7 @@ export class Nav implements OnInit {
     this.accountService.login(this.creds).subscribe({
       next: () => {
         this.creds = {};
-        this.toast.succes('Logged in succesfully');
+        this.toast.success('Logged in succesfully');
         this.router.navigateByUrl('/members');
       },
       error: (error) => this.toast.error(error.error),
