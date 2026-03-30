@@ -15,24 +15,38 @@ export class MemberService {
   public editMode = signal(false);
   public member = signal<Member | null>(null);
 
-  getMembers() {
+  public getMembers() {
     return this.http.get<Member[]>(this.baseUrl + 'members');
   }
 
-  getMember(id: string) {
+  public getMember(id: string) {
     return this.http.get<Member>(this.baseUrl + 'members/' + id).pipe(
-      tap(member => {
+      tap((member) => {
         this.member.set(member);
-      })
+      }),
     );
   }
 
-  getMemberPhotos(id: string) {
+  public getMemberPhotos(id: string) {
     return this.http.get<Photo[]>(this.baseUrl + 'members/' + id + '/photos');
   }
 
-  updateMember(member: EditableMember) {
+  public updateMember(member: EditableMember) {
     return this.http.put(this.baseUrl + 'members', member);
+  }
+
+  public uploadPhoto(file: File) {
+    const formData = new FormData();
+    formData.append('file', file);
+    return this.http.post<Photo>(this.baseUrl + 'members/add-photo', formData);
+  }
+
+  public setMainPhoto(photo: Photo) {
+    return this.http.put(this.baseUrl + 'members/set-main-photo/' + photo.id, photo);
+  }
+
+  public deletePhoto(id: string) {
+    return this.http.delete(this.baseUrl + 'members/delete-photo/' + id);
   }
 
 }
