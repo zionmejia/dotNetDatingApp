@@ -7,9 +7,9 @@ import { tap } from 'rxjs';
   providedIn: 'root',
 })
 export class AccountService implements OnInit {
-  private http = inject(HttpClient);
   public currentUser = signal<User | null>(null);
-  baseUrl = 'https://localhost:7252/api/';
+  public baseUrl = 'https://localhost:7252/api/';
+  private http = inject(HttpClient);
 
   ngOnInit() {
     return this.http.get(this.baseUrl + 'members');

@@ -1,5 +1,5 @@
 import { Component, input, output } from '@angular/core';
-import { FormGroup, FormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 import { RegisterCreds } from '../../../interface/userInterface';
 import { AccountService } from '../../../core/services/account-service';
 
@@ -15,21 +15,19 @@ export class Register {
   protected creds = {} as RegisterCreds;
   private accountService = new AccountService();
 
-
-  register(){
+  public register() {
     this.accountService.register(this.creds).subscribe({
-      next: result => {
+      next: (result) => {
         console.log(result);
-        this.cancel()
+        this.cancel();
       },
-      error: err => {
+      error: (err) => {
         console.log(err);
-      }
-    })
+      },
+    });
   }
 
-  cancel(){
-    this.cancelRegister.emit(false)
+  public cancel() {
+    this.cancelRegister.emit(false);
   }
-
 }

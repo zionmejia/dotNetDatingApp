@@ -16,12 +16,12 @@ import { toSignal } from '@angular/core/rxjs-interop';
   styleUrl: './member-photos.css',
 })
 export class MemberPhotos implements OnInit {
-  private route = inject(ActivatedRoute);
-  private accountService = inject(AccountService);
+  public route = inject(ActivatedRoute);
+  public accountService = inject(AccountService);
   public memberService = inject(MemberService);
-  protected photos = signal<Photo[]>([]);
-  protected loading = signal(false);
   public paramMap = toSignal(this.route.paramMap);
+  public photos = signal<Photo[]>([]);
+  public loading = signal(false);
   public isCurrentUser = computed(() => {
     const id = this.route.parent?.snapshot.paramMap.get('id');
     return this.accountService.currentUser()?.id === id;

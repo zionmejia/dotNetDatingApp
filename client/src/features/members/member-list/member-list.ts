@@ -12,8 +12,8 @@ import { MemberCard } from '../member-card/member-card';
   styleUrl: './member-list.css',
 })
 export class MemberList {
-  private memberService = inject(MemberService);
   protected members$: Observable<Member[]>;
+  private memberService = inject(MemberService);
 
   constructor() {
     this.members$ = this.memberService.getMembers();

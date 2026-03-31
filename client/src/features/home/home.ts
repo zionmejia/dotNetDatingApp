@@ -8,11 +8,12 @@ import { User } from '../../interface/userInterface';
   templateUrl: './home.html',
   styleUrl: './home.css',
 })
+
 export class Home {
   @Input({ required: true }) membersFromApp: User[] = [];
   protected registerMode = signal(false);
 
-  showRegister(value: boolean) {
+  public showRegister(value: boolean) {
     this.registerMode.set(value);
   }
 

@@ -10,8 +10,7 @@ import {Location} from '@angular/common';
 export class NotFound {
   private location = inject(Location);
 
-  goBack() {
+  public goBack() {
     this.location.back();
   }
-
 }

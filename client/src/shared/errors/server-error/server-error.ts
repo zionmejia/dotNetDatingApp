@@ -13,15 +13,13 @@ export class ServerError {
   protected showDetails = signal<boolean>(false);
   private router = inject(Router);
 
-
   constructor() {
     const navigation = this.router.currentNavigation();
-    this.error.set(navigation?.extras?.state?.['error'])
+    this.error.set(navigation?.extras?.state?.['error']);
     console.log(navigation?.extras?.state?.['error']);
   }
 
-  detailsToggle() {
+  public detailsToggle() {
     this.showDetails.set(!this.showDetails());
   }
-
 }

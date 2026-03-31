@@ -4,10 +4,8 @@ import {
   inject,
   OnDestroy,
   OnInit,
-  signal,
   ViewChild,
 } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { EditableMember, Member } from '../../../interface/members';
 import { DatePipe } from '@angular/common';
 import { MemberService } from '../../../core/services/member-service';
@@ -28,7 +26,6 @@ export class MemberProfile implements OnInit, OnDestroy {
       $event?.preventDefault();
     }
   }
-  private toast = inject(ToastService);
   protected memberService = inject(MemberService);
   protected accountService = inject(AccountService);
   protected editableMember: EditableMember = {
@@ -37,6 +34,7 @@ export class MemberProfile implements OnInit, OnDestroy {
     city: '',
     country: '',
   };
+  private toast = inject(ToastService);
 
   ngOnInit() {
     this.editableMember = {
@@ -47,7 +45,7 @@ export class MemberProfile implements OnInit, OnDestroy {
     };
   }
 
-  updateProfile() {
+  public updateProfile() {
     if (!this.memberService.member()) return;
     const updatedMember = { ...this.memberService.member(), ...this.editableMember };
     this.memberService.updateMember(this.editableMember).subscribe({
@@ -65,7 +63,7 @@ export class MemberProfile implements OnInit, OnDestroy {
     });
   }
 
-  ngOnDestroy() {
+  public ngOnDestroy() {
     if (this.memberService.editMode()) {
       this.memberService.editMode.set(false);
     }

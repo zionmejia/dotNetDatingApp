@@ -1,6 +1,4 @@
 import { inject, Injectable, signal } from '@angular/core';
-import { AccountService } from './account-service';
-
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { EditableMember, Member, Photo } from '../../interface/members';
@@ -10,10 +8,10 @@ import { tap } from 'rxjs';
   providedIn: 'root',
 })
 export class MemberService {
-  private http = inject(HttpClient);
-  private baseUrl = environment.apiUrl;
   public editMode = signal(false);
   public member = signal<Member | null>(null);
+  private http = inject(HttpClient);
+  private baseUrl = environment.apiUrl;
 
   public getMembers() {
     return this.http.get<Member[]>(this.baseUrl + 'members');
@@ -48,5 +46,4 @@ export class MemberService {
   public deletePhoto(id: string) {
     return this.http.delete(this.baseUrl + 'members/delete-photo/' + id);
   }
-
 }

@@ -8,46 +8,45 @@ import { HttpClient } from '@angular/common/http';
   styleUrl: './test-errors.css',
 })
 export class TestErrors {
+  public baseUrl = 'https://localhost:7252/api/';
+  public validationErrors = signal<string[]>([]);
   private http = inject(HttpClient);
-  baseUrl = 'https://localhost:7252/api/';
-  validationErrors = signal<string[]>([])
 
-  get404Error() {
+  public get404Error() {
     this.http.get(this.baseUrl + 'buggy/not-found').subscribe({
       next: (response) => console.log(response),
       error: (error) => console.log(error),
     });
   }
 
-  get400Error() {
+  public get400Error() {
     this.http.get(this.baseUrl + 'buggy/bad-request').subscribe({
       next: (response) => console.log(response),
       error: (error) => console.log(error),
     });
   }
 
-  get500Error() {
+  public get500Error() {
     this.http.get(this.baseUrl + 'buggy/server-error').subscribe({
-      next: (response) => console.log(response+ "asd"),
-      error: (error) => console.log(error+"asd"),
+      next: (response) => console.log(response + 'asd'),
+      error: (error) => console.log(error + 'asd'),
     });
   }
 
-  get401Error() {
+  public get401Error() {
     this.http.get(this.baseUrl + 'buggy/auth').subscribe({
       next: (response) => console.log(response),
       error: (error) => console.log(error),
     });
   }
 
-  get400ValidationError() {
+  public get400ValidationError() {
     this.http.post(this.baseUrl + 'account/register', {}).subscribe({
-      next: response => console.log(response),
-      error: error =>
-      {
+      next: (response) => console.log(response),
+      error: (error) => {
         // console.log(error);
         this.validationErrors.set(error);
-      }
+      },
     });
   }
 }

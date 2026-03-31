@@ -7,8 +7,8 @@ import { Component, input, output } from '@angular/core';
   styleUrl: './delete-button.css',
 })
 export class DeleteButton {
-  disabled = input<boolean>(false);
-  clickEvent = output<Event>();
+  public disabled = input<boolean>(false);
+  public clickEvent = output<Event>();
 
   public onClick(event: Event) {
     this.clickEvent.emit(event);

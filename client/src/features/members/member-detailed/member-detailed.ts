@@ -8,7 +8,6 @@ import {
   RouterLinkActive,
   RouterOutlet,
 } from '@angular/router';
-import { Member } from '../../../interface/members';
 import { filter, Observable } from 'rxjs';
 import { AgePipe } from '../../../core/pipes/age-pipe';
 import { AccountService } from '../../../core/services/account-service';
@@ -21,9 +20,7 @@ import { toSignal } from '@angular/core/rxjs-interop';
   styleUrl: './member-detailed.css',
 })
 export class MemberDetailed implements OnInit {
-  private route = inject(ActivatedRoute);
-  private router = inject(Router);
-  private accountService = inject(AccountService);
+  public route = inject(ActivatedRoute);
   public title = signal<string | undefined>('Profile');
   public memberService = inject(MemberService);
   public paramMap = toSignal(this.route.paramMap);
@@ -31,6 +28,8 @@ export class MemberDetailed implements OnInit {
     const id = this.paramMap()?.get('id');
     return this.accountService.currentUser()?.id === id;
   });
+  private router = inject(Router);
+  private accountService = inject(AccountService);
 
   ngOnInit(): void {
     this.title.set(this.route.firstChild?.snapshot?.title);

@@ -1,9 +1,4 @@
-import { Component, inject, input, output, signal } from '@angular/core';
-import { AccountService } from '../../core/services/account-service';
-import { MemberService } from '../../core/services/member-service';
-import { Photo } from '../../interface/members';
-import { HttpClient } from '@angular/common/http';
-import { environment } from '../../environments/environment';
+import { Component, input, output, signal } from '@angular/core';
 
 @Component({
   selector: 'app-image-upload',
@@ -12,25 +7,25 @@ import { environment } from '../../environments/environment';
   styleUrl: './image-upload.css',
 })
 export class ImageUpload {
+  public uploadFile = output<File>();
+  public loading = input<boolean>(false);
   protected imageSrc = signal<string | ArrayBuffer | null | undefined>(null);
   protected isDragging = false;
   private fileToUpload: File | null = null;
-  public uploadFile = output<File>();
-  loading = input<boolean>(false);
 
-  onDragOver(event: DragEvent) {
+  public onDragOver(event: DragEvent) {
     event.preventDefault();
     event.stopPropagation();
     this.isDragging = true;
   }
 
-  onDragLeave(event: DragEvent) {
+  public onDragLeave(event: DragEvent) {
     event.preventDefault();
     event.stopPropagation();
     this.isDragging = false;
   }
 
-  onDrop(event: DragEvent) {
+  public onDrop(event: DragEvent) {
     event.preventDefault();
     event.stopPropagation();
     this.isDragging = false;
@@ -59,5 +54,4 @@ export class ImageUpload {
     reader.onload = (e) => this.imageSrc.set(e.target?.result);
     reader.readAsDataURL(file);
   }
-
 }

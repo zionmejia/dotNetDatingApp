@@ -14,8 +14,6 @@ import { BusyService } from '../../core/services/busy-service';
 })
 export class Nav implements OnInit {
   public accountService = inject(AccountService);
-  private router = inject(Router);
-  private toast = inject(ToastService);
   protected busyService = inject(BusyService);
   protected creds: any = {};
   protected selectedTheme = signal<string>(localStorage.getItem('theme') || 'light');
@@ -25,12 +23,14 @@ export class Nav implements OnInit {
     localStorage.setItem('theme', theme);
     document.documentElement.setAttribute('data-theme', theme);
   }
+  private router = inject(Router);
+  private toast = inject(ToastService);
 
   ngOnInit(): void {
     document.documentElement.setAttribute('data-theme', this.selectedTheme());
   }
 
-  login() {
+  public login() {
     this.accountService.login(this.creds).subscribe({
       next: () => {
         this.creds = {};
@@ -41,7 +41,7 @@ export class Nav implements OnInit {
     });
   }
 
-  logout() {
+  public logout() {
     this.accountService.logout();
     this.router.navigateByUrl('/');
   }

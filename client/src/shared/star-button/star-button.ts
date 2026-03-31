@@ -7,9 +7,9 @@ import { Component, input, output } from '@angular/core';
   styleUrl: './star-button.css',
 })
 export class StarButton {
-  disabled= input<boolean>();
-  selected= input<boolean>();
-  clickEvent = output<Event>();
+  public disabled = input<boolean>();
+  public selected = input<boolean>();
+  public clickEvent = output<Event>();
 
   onClick(event: Event) {
     this.clickEvent.emit(event);
