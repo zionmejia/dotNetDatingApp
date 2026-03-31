@@ -27,11 +27,10 @@ export const routes: Routes = [
       {
         path: 'members',
         component: MemberList,
-        canActivate: [authGuard],
       },
       {
         path: 'members/:id',
-        resolve: {member: memberResolver},
+        resolve: { member: memberResolver },
         runGuardsAndResolvers: 'always',
         component: MemberDetailed,
         children: [

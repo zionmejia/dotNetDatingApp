@@ -38,6 +38,9 @@ export class MemberPhotos implements OnInit {
     this.loading.set(true);
     this.memberService.uploadPhoto(file).subscribe({
       next: (photo) => {
+        if (this.photos().length === 0) {
+          this.setMainPhoto(photo)
+        }
         this.memberService.editMode.set(false);
         this.loading.set(false);
         this.photos.update((photos) => [...photos, photo]);
