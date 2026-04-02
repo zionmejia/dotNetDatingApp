@@ -24,3 +24,12 @@ export interface EditableMember {
   city: string;
   country: string;
 }
+
+export interface MemberParams {
+  gender?: string;
+  minAge: number;
+  maxAge: number;
+  pageNumber: number;
+  pageSize: number;
+  orderBy: string;
+}

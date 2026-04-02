@@ -6,11 +6,11 @@ import { ToastService } from '../services/toast-service';
 export const authGuard: CanActivateFn = () => {
   const accountService = inject(AccountService);
   const toast = inject(ToastService);
-  if (accountService.currentUser()){
+
+  if (accountService.currentUser()) {
     return true;
   }
-  else {
-  toast.error("you shall not pass")
-    return false
-  }
+
+  toast.error('you shall not pass');
+  return false;
 };

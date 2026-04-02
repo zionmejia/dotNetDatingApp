@@ -39,7 +39,7 @@ export class MemberPhotos implements OnInit {
     this.memberService.uploadPhoto(file).subscribe({
       next: (photo) => {
         if (this.photos().length === 0) {
-          this.setMainPhoto(photo)
+          this.updateMainPhotoLocal(photo)
         }
         this.memberService.editMode.set(false);
         this.loading.set(false);
@@ -67,6 +67,12 @@ export class MemberPhotos implements OnInit {
         );
       },
     });
+  }
+
+  private updateMainPhotoLocal(photo: Photo) {
+    const currentUser = this.accountService.currentUser();
+    if (currentUser) currentUser.imageUrl = photo.url;
+    this.accountService.setCurrentUser(currentUser as User);
   }
 
   public deletePhoto(photoId: string) {

@@ -2,9 +2,9 @@ export interface User{
   id: string;
   displayName: string;
   email: string;
-  password: string;
+  // password: string;
   token: string;
-  imageUrl?: string;
+  imageUrl?: string | null;
 }
 
 export interface LoginCreds {

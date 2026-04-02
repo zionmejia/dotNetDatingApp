@@ -6,6 +6,7 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
+import { TimeAgoPipe} from '../../../core/pipes/time-ago-pipe';
 import { EditableMember, Member } from '../../../interface/members';
 import { DatePipe } from '@angular/common';
 import { MemberService } from '../../../core/services/member-service';
@@ -15,7 +16,7 @@ import { AccountService } from '../../../core/services/account-service';
 
 @Component({
   selector: 'app-member-profile',
-  imports: [DatePipe, FormsModule],
+  imports: [DatePipe, FormsModule, TimeAgoPipe],
   templateUrl: './member-profile.html',
   styleUrl: './member-profile.css',
 })
@@ -26,6 +27,7 @@ export class MemberProfile implements OnInit, OnDestroy {
       $event?.preventDefault();
     }
   }
+
   protected memberService = inject(MemberService);
   protected accountService = inject(AccountService);
   protected editableMember: EditableMember = {

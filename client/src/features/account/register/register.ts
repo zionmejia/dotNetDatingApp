@@ -25,8 +25,8 @@ export class Register implements OnInit {
   public registerForm: FormGroup = new FormGroup({});
   public profileForm: FormGroup = new FormGroup({});
   protected validationErrors = signal<string[]>([]);
-  private accountService = new AccountService();
-  private router = inject(Router);
+  private readonly accountService = inject(AccountService);
+  private readonly router = inject(Router);
 
   ngOnInit() {
     this.initialzeForm();
@@ -77,9 +77,7 @@ export class Register implements OnInit {
 
       this.accountService.register(formData).subscribe({
         next: (response) => {
-          setTimeout(() => {
             this.router.navigate(['/members']);
-          }, 100); // 50ms is usually enough
         },
         error: (error) => {
           console.log(error);
