@@ -51,31 +51,5 @@ public class LikesController(ILikesRepository likesRepository, IMemberRepository
        return Ok(members);
        
     }
-    
-    // [HttpGet]
-    // public async Task<ActionResult> GetMembers()
-    // {
-    //     return (ActionResult)await GetMembers();
-    // }
-    //
-    // [HttpGet("get/{id}")]
-    // public async Task<ActionResult> GetMemberById(string id)
-    // {
-    //     return Ok(await memberRepository.GetMemberByIdAsync(id));
-    // }
-    //
-    // [HttpGet("{type}")]
-    // public async Task<ActionResult> GetLikes(string type)
-    // {
-    //     var memberId = User.GetMemberId();
-    //
-    //     // Validate input
-    //     var validTypes = new[] { "liked", "likedBy", "mutuals" };
-    //     if (!validTypes.Contains(type))
-    //         return BadRequest("Invalid likes type.");
-    //
-    //     var likes = await likesRepository.GetMemberLikes(type, memberId);
-    //     return Ok(likes);
-    // }
 
 }
