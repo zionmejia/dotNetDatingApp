@@ -2,37 +2,36 @@ import { computed, effect, inject, Injectable, OnInit, signal } from '@angular/c
 import { HttpClient } from '@angular/common/http';
 import { LoginCreds, RegisterCreds, User } from '../../interface/userInterface';
 import { tap } from 'rxjs';
+import { LikesService } from './likes-service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AccountService implements OnInit {
   public currentUser = signal<User | null>(null);
-  public baseUrl = 'https://localhost:7252/api/';
   public test = computed(() => {
-    this.currentUser()
-    console.log(this.test)
+    this.currentUser();
+    console.log(this.test);
   });
-
+  private baseUrl = 'https://localhost:7252/api/';
   private http = inject(HttpClient);
+  private likesService = inject(LikesService);
 
-// constructor() {
-//   effect(() => {
-//     console.log(this.test);
-//   });
-// }
+  // constructor() {
+  //   effect(() => {
+  //     console.log(this.test);
+  //   });
+  // }
 
   ngOnInit() {
     return this.http.get(this.baseUrl + 'members');
-
-
   }
 
   public register(creds: RegisterCreds) {
     return this.http.post<User>(this.baseUrl + 'account/register', creds).pipe(
       tap((user) => {
         console.log(user);
-        console.log("before set user");
+        console.log('before set user');
         if (user) {
           this.setCurrentUser(user);
           console.log(this.currentUser());
@@ -55,6 +54,7 @@ export class AccountService implements OnInit {
   public setCurrentUser(user: User) {
     this.currentUser.set(user);
     localStorage.setItem('user', JSON.stringify(user));
+    this.likesService.getLikeIds();
   }
 
   public logout() {

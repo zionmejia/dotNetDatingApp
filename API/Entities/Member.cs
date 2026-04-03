@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
-using System.Text.Json.Serialization;
+using Newtonsoft.Json;
 
 namespace API.Entities;
 
@@ -17,9 +17,13 @@ public class Member
     public string? Country { get; set; }
     
     //nav props
-    [JsonIgnore]
+    [System.Text.Json.Serialization.JsonIgnore]
     public List<Photo> Photos { get; set; } = [];
+    [System.Text.Json.Serialization.JsonIgnore]
+    public List<MemberLike> LikedByMembers { get; set; } = [];
+    [System.Text.Json.Serialization.JsonIgnore]
+    public List<MemberLike> LikedMembers { get; set; } = [];
 
-    [JsonIgnore] 
+    [System.Text.Json.Serialization.JsonIgnore] 
     [ForeignKey(nameof(Id))] public AppUser User { get; set; } = null!;
 }

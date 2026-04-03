@@ -30,7 +30,7 @@ export class FilterModal {
     this.closeModal.emit();
   }
 
-  public sumbit() {
+  public submit() {
     this.submitData.emit(this.memberParams());
     this.close();
   }

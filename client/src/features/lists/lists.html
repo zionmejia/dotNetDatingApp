@@ -1,1 +1,48 @@
-<p>lists works!</p>
+@if (paginatedMembers(); as paginatedResult) {
+  <div class="tabs tabs-box tabs-lg text-primary w-fit">
+    @for (tab of tabs; track $index) {
+      <button role="tab" class="tab"
+              [class.tab-active]="predicate === tab.value"
+              (click)="setPredicate(tab.value)"
+      >{{ tab.label }}
+
+      </button>
+    }
+  </div>
+  <div class="flex justify-between items-center">
+    <div class="flex gap-3 items-center">
+      <button (click)="openModal()" class="btn btn-primary">Select Filters</button>
+      <button (click)="resetFilter()" class="btn btn-neutral">Reset Filters</button>
+      <div class="text-lg bg-base-100 py-2 px-4 border-1 rounded-lg text-primary capitalize">
+        {{ displayMessage }}
+      </div>
+    </div>
+
+  @if (paginatedResult.metadata; as metadata) {
+    <app-paginator
+      [pageNumber]="metadata.currentPage"
+      [pageSize]="metadata.pageSize"
+      [totalCount]="metadata.totalCount"
+      [totalPages]="metadata.totalPages"
+      (pageChange)="onPageChange($event)"
+    />
+  }
+  </div>
+  @if (paginatedResult.items; as members) {
+    <div class="grid grid-cols-5 gap-6 mt-3">
+      @for (member of members; track member.id) {
+        <app-member-card [member]="member" />
+
+      }
+    </div>
+  }
+
+  <app-filter-modal
+    [memberParams]="memberParams"
+    #filterModal
+    [hidden]="!paginatedMembers()"
+    (closeModal)="onCloseModal()"
+    (submitData)="onFilterChange($event)"
+  />
+
+}

@@ -1,0 +1,81 @@
+﻿using API.Entities;
+using API.Extensions;
+using API.Interfaces;
+using API.Helpers;
+using Microsoft.AspNetCore.Mvc;
+
+namespace API.Controllers;
+
+public class LikesController(ILikesRepository likesRepository, IMemberRepository memberRepository) : BaseApiController
+{
+    [HttpPost("{targetMemberId}")]
+    public async Task<ActionResult> ToggleLike(string targetMemberId)
+    {
+        var sourceMemberId = User.GetMemberId();
+        if (sourceMemberId == targetMemberId) return BadRequest("You cannot like yourself");
+        
+        var existingLike = await likesRepository.GetMemberLike(sourceMemberId , targetMemberId);
+
+        if (existingLike == null)
+        {
+            var like = new MemberLike
+            {
+                SourceMemberId = sourceMemberId,
+                TargetMemberId = targetMemberId
+            };
+            
+            likesRepository.AddLike(like);
+        }
+        else
+        {
+            likesRepository.DeleteLike(existingLike);
+        }
+        
+        if (await likesRepository.SaveAllChanges()) return Ok();
+        
+        return BadRequest("Failed to update likes");
+            
+    }
+
+    [HttpGet("list")]
+    public async Task<ActionResult<IReadOnlyList<string>>> GetCurrentMemberLikeIds()
+    {
+        return Ok(await likesRepository.GetCurrentMemberLikeIds(User.GetMemberId()));
+    }
+    
+    [HttpGet]
+    public async Task<ActionResult<IReadOnlyList<Member>>> GetMemberLikes( [FromQuery] string predicate,[FromQuery] MemberParams memberParams)
+    {
+       var members = await likesRepository.GetMemberLikes(predicate, User.GetMemberId(), memberParams);
+       
+       return Ok(members);
+       
+    }
+    
+    // [HttpGet]
+    // public async Task<ActionResult> GetMembers()
+    // {
+    //     return (ActionResult)await GetMembers();
+    // }
+    //
+    // [HttpGet("get/{id}")]
+    // public async Task<ActionResult> GetMemberById(string id)
+    // {
+    //     return Ok(await memberRepository.GetMemberByIdAsync(id));
+    // }
+    //
+    // [HttpGet("{type}")]
+    // public async Task<ActionResult> GetLikes(string type)
+    // {
+    //     var memberId = User.GetMemberId();
+    //
+    //     // Validate input
+    //     var validTypes = new[] { "liked", "likedBy", "mutuals" };
+    //     if (!validTypes.Contains(type))
+    //         return BadRequest("Invalid likes type.");
+    //
+    //     var likes = await likesRepository.GetMemberLikes(type, memberId);
+    //     return Ok(likes);
+    // }
+
+}
