@@ -1,9 +1,10 @@
 import { inject, Injectable, signal } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpClient,HttpParams } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { EditableMember, Member, MemberParams, Photo } from '../../interface/members';
 import { tap } from 'rxjs';
 import { PaginatedResult } from '../../interface/pagination';
+import { AccountService } from './account-service';
 
 @Injectable({
   providedIn: 'root',
@@ -60,4 +61,6 @@ export class MemberService {
   public deletePhoto(id: string) {
     return this.http.delete(this.baseUrl + 'members/delete-photo/' + id);
   }
+
+
 }

@@ -15,15 +15,21 @@ public class Member
     public string? Description { get; set; }
     public string? City { get; set; }
     public string? Country { get; set; }
-    
+
     //nav props
     [System.Text.Json.Serialization.JsonIgnore]
     public List<Photo> Photos { get; set; } = [];
+
     [System.Text.Json.Serialization.JsonIgnore]
     public List<MemberLike> LikedByMembers { get; set; } = [];
+
     [System.Text.Json.Serialization.JsonIgnore]
     public List<MemberLike> LikedMembers { get; set; } = [];
 
-    [System.Text.Json.Serialization.JsonIgnore] 
-    [ForeignKey(nameof(Id))] public AppUser User { get; set; } = null!;
+    [JsonIgnore] public List<Message> MessagesSent { get; set; } = [];
+    [JsonIgnore] public List<Message> MessagesReceived { get; set; } = [];
+
+    [System.Text.Json.Serialization.JsonIgnore]
+    [ForeignKey(nameof(Id))]
+    public AppUser User { get; set; } = null!;
 }
